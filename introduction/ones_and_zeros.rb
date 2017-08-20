@@ -1,3 +1,7 @@
+# This is implementation of a simple genetic algorithm shown
+# in the first chapter of 'An Introduction to Genetic Algorithms' by
+# Mitchell Melanie
+
 def random_chromosome(length)
   (1..length).map { rand(0..1) }
 end
@@ -7,9 +11,11 @@ def init_population(size, length)
   (1..size).map { random_chromosome length }
 end
 
+
 def fittnes(chromosome)
   chromosome.count(1) / chromosome.size.to_f
 end
+
 
 def crossover(a, b, crossover_prob)
   return [a, b] if rand < 1 - crossover_prob
@@ -22,9 +28,11 @@ def crossover(a, b, crossover_prob)
   [left_a + right_b, left_b + right_a]
 end
 
+
 def mutate(chromosome, p_m)
   chromosome.map { |b| (rand < p_m) ? 1 - b : b }
 end
+
 
 def roulete_wheel_sampling(population, fittnes)
   roulete = []
@@ -35,6 +43,7 @@ def roulete_wheel_sampling(population, fittnes)
 
   roulete
 end
+
 
 def next_population(current_population, p_fittnes, p_c, p_m)
   roulete = roulete_wheel_sampling current_population, p_fittnes
@@ -86,3 +95,6 @@ def run(size, length, p_c, p_m, generations = 100)
 
   population[best[0][1]].join
 end
+
+# example
+run 4, 8, 0.7, 0.001
